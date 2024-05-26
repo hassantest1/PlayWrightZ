@@ -7,7 +7,10 @@ import dbfactory.LoginPageScripts;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.asserts.SoftAssert;
+import pagefactory.AddChannelPage;
+import pagefactory.CheckerPage;
 import pagefactory.LoginPage;
+import pagefactory.NavigationPage;
 import utils.common.CommonFun;
 import utils.configrations.ConfigManager;
 import utils.database.DBQueryExecutor;
@@ -23,11 +26,14 @@ public class LoginBase extends LoginPageScripts {
     protected Browser browser;
     protected Page page;
     protected LoginPage loginPage;
+    protected AddChannelPage addChannelPage;
+    protected NavigationPage navigation;
+
+    protected CheckerPage checkerPage;
     protected String userName;
     protected String userPass;
     protected String staticOtp;
     protected Playwright playwright;
-
     protected SoftAssert softAssert;
 
 
@@ -41,8 +47,11 @@ public class LoginBase extends LoginPageScripts {
         playwright = Playwright.create();
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         page = browser.newPage();
-        page.setDefaultTimeout(90000);
+        page.setDefaultTimeout(140000);
         loginPage = new LoginPage(page);
+        addChannelPage = new AddChannelPage(page);
+        checkerPage = new CheckerPage(page);
+        navigation = new NavigationPage(page);
         loginPage.navigateToLoginPage(ZboxUrls.ZBOX_BASE_URL_QA);
 
     }

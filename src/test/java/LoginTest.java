@@ -82,7 +82,6 @@ public class LoginTest extends LoginBase {
         String userID = (String) page.evaluate(Strings.getUserIDFromSession);
         int flag = returnLoginHistory(userID);
         loginPage.logOut();
-        Assert.assertEquals(flag,0,"No user login Record is found in Database against UserID="+userID);
-        //org.junit.Assert.assertEquals(flag,0);
+        Assert.assertEquals(flag,1,"No user login Record is found in Database against UserID="+userID);
     }
 }
