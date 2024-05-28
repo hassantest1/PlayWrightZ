@@ -34,11 +34,12 @@ public class CommonFun {
         Matcher idMatcher = idPattern.matcher(paragraph);
         Matcher nameMatcher = namePatternCompiled.matcher(paragraph);
 
-        // Extract the Transaction ID
-        if (idMatcher.find()) {
+        // Extract the Transaction ID and name
+        if (idMatcher.find() && nameMatcher.find()) {
             String transactionId = idMatcher.group(1);
-            System.out.println("Transaction ID: " + transactionId);
-            return transactionId;
+            String name = nameMatcher.group(1);
+            System.out.println("Transaction ID: " + transactionId + name);
+            return transactionId+","+name;
         }
 
         // Extract the Name

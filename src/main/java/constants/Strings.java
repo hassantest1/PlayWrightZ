@@ -16,4 +16,5 @@ public class Strings {
     public static String verifyOtpText = "Verify OTP";
     public static String pleaseCheckEmailText = "Please Check Your Email";
     public static String didNotGetOtpText = "Didn't get the code?";
+    public static String thisFieldIsRequiredText = "This Field is required";
 }

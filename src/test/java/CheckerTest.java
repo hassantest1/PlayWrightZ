@@ -8,8 +8,10 @@ import org.testng.annotations.Test;
 import pagefactory.CheckerPage;
 import pagefactory.LoginPage;
 import pagefactory.NavigationPage;
+import utils.configrations.ConfigManager;
 import utils.extentreports.ExtentTestManager;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class CheckerTest {
@@ -18,10 +20,15 @@ public class CheckerTest {
     private Page page;
     private CheckerPage checkerPage;
     private String checkerId = "8189";
+    private String userPass;
+    private String staticOtp;
+    private String checkerName;
     private LoginPage loginPage;
     private NavigationPage navigation;
     public CheckerTest(String checkerID) throws SQLException {
-        checkerId = checkerID;
+        String[] parts = checkerID.split(",");
+        checkerId = parts[0];
+        checkerName = parts[1];
         playwright = Playwright.create();
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
         page = browser.newPage();
@@ -30,13 +37,21 @@ public class CheckerTest {
         navigation = new NavigationPage(page);
         checkerPage = new CheckerPage(page);
         loginPage.navigateToLoginPage(ZboxUrls.ZBOX_BASE_URL_QA);
+        ConfigManager getKey = null;
+        try {
+            getKey = new ConfigManager();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        userPass = getKey.getKeyValue("user_pass");
+        staticOtp = getKey.getKeyValue("otp");
     }
     @Test(priority = 2, groups = "positive")
     public void testLoginPositive() throws SQLException {
         ExtentTestManager.startTest("testLoginPositive",
                 "Verify user should be able to login using valid credentials");
-        loginPage.login("USAMA", "1234");
-        loginPage.enterOtp("1234");
+        loginPage.login(checkerName, userPass);
+        loginPage.enterOtp(staticOtp);
         navigation.navigateToChecker();
     }
 

@@ -15,6 +15,10 @@ public class AddChannelPage {
     private final String successDialogMsgLocator = "//div[@class='DeleteLabel__Text']//label[@for='moduleDescr']";
     private final String dialogBoxOkButtonLocator = "//button[@aria-label='Okay' and @class='p-button p-component Btn__Dark__Ok']";
 
+    private final String nameFieldErrorMessageLocator = "(//small[@class='p-error'])[1]";
+    private final String desFieldErrorMessageLocator = "(//small[@class='p-error'])[2]";
+
+
     public AddChannelPage(Page page) {
         this.page = page;
     }
@@ -40,6 +44,19 @@ public class AddChannelPage {
 
     public void clickDialogBoxOkButton(){
         page.click(dialogBoxOkButtonLocator);
+    }
+
+    public void checkNameFieldErrorMessageIsVisible(){
+        page.locator(nameFieldErrorMessageLocator).isVisible();
+    }
+
+    public void checkDesFieldErrorMessageIsVisible(){
+        page.locator(nameFieldErrorMessageLocator).isVisible();
+    }
+
+    public void emptyAllInputFields(){
+        page.fill(channelNameFieldLocator,"");
+        page.fill(channelDescriptionFieldLocator,"");
     }
 
     public String getCheckerID(){
