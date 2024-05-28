@@ -8,6 +8,8 @@
   <test thread-count="5" name="Test">
     <classes>
       <class name="LoginTest"/>
+      <class name="CheckerTest"/>
+      <class name="ChannelTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

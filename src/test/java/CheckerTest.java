@@ -26,25 +26,30 @@ public class CheckerTest {
     private LoginPage loginPage;
     private NavigationPage navigation;
     public CheckerTest(String checkerID) throws SQLException {
-        String[] parts = checkerID.split(",");
-        checkerId = parts[0];
-        checkerName = parts[1];
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
-        page = browser.newPage();
-        page.setDefaultTimeout(140000);
-        loginPage = new LoginPage(page);
-        navigation = new NavigationPage(page);
-        checkerPage = new CheckerPage(page);
-        loginPage.navigateToLoginPage(ZboxUrls.ZBOX_BASE_URL_QA);
-        ConfigManager getKey = null;
         try {
-            getKey = new ConfigManager();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            String[] parts = checkerID.split(",");
+            checkerId = parts[0];
+            checkerName = parts[1];
+            playwright = Playwright.create();
+            browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            page = browser.newPage();
+            page.setDefaultTimeout(140000);
+            loginPage = new LoginPage(page);
+            navigation = new NavigationPage(page);
+            checkerPage = new CheckerPage(page);
+            loginPage.navigateToLoginPage(ZboxUrls.ZBOX_BASE_URL_QA);
+            ConfigManager getKey = null;
+            try {
+                getKey = new ConfigManager();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            userPass = getKey.getKeyValue("user_pass");
+            staticOtp = getKey.getKeyValue("otp");
+        }catch (Exception e){
+            System.out.println(e);
         }
-        userPass = getKey.getKeyValue("user_pass");
-        staticOtp = getKey.getKeyValue("otp");
+
     }
     @Test(priority = 2, groups = "positive")
     public void testLoginPositive() throws SQLException {
