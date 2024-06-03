@@ -27,9 +27,6 @@ public class BaseClass extends LoginPageScripts {
     protected Playwright playwright;
     protected SoftAssert softAssert;
 
-    protected PlaywrightSession playwrightSession;
-
-
     @BeforeClass
     public void setUp() throws IOException {
 
