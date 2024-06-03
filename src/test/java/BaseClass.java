@@ -1,7 +1,4 @@
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserType;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.*;
 import constants.ZboxUrls;
 import dbfactory.LoginPageScripts;
 import org.testng.annotations.AfterClass;
@@ -11,19 +8,13 @@ import pagefactory.AddChannelPage;
 import pagefactory.CheckerPage;
 import pagefactory.LoginPage;
 import pagefactory.NavigationPage;
-import utils.common.CommonFun;
 import utils.configrations.ConfigManager;
-import utils.database.DBQueryExecutor;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-public class LoginBase extends LoginPageScripts {
+public class BaseClass extends LoginPageScripts {
 
-    protected Browser browser;
+    protected BrowserContext browser;
     protected Page page;
     protected LoginPage loginPage;
     protected AddChannelPage addChannelPage;
@@ -36,28 +27,33 @@ public class LoginBase extends LoginPageScripts {
     protected Playwright playwright;
     protected SoftAssert softAssert;
 
+    protected PlaywrightSession playwrightSession;
+
 
     @BeforeClass
     public void setUp() throws IOException {
 
+        //playwrightSession = PlaywrightSession.getInstance();
         ConfigManager getKey = new ConfigManager();
         userName = getKey.getKeyValue("user_name");
         userPass = getKey.getKeyValue("user_pass");
         staticOtp = getKey.getKeyValue("otp");
         playwright = Playwright.create();
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)).newContext();
         page = browser.newPage();
-        page.setDefaultTimeout(140000);
+       // page = playwrightSession.getPage();
+        page.setDefaultTimeout(120000);
         loginPage = new LoginPage(page);
         addChannelPage = new AddChannelPage(page);
         checkerPage = new CheckerPage(page);
         navigation = new NavigationPage(page);
-        loginPage.navigateToLoginPage(ZboxUrls.ZBOX_BASE_URL_QA);
+        page.navigate(ZboxUrls.ZBOX_BASE_URL_QA);
 
     }
 
     @AfterClass
     public void tearDown() {
+        //playwrightSession.storeSessionStorage();
         if (browser != null) {
             browser.close();
         }

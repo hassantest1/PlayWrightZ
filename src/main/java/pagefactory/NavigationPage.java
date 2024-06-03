@@ -22,6 +22,11 @@ public class NavigationPage {
     public void navigateToChecker(){
         navigation("Administration","Request Checker");
     }
+
+    public void navigateToDashBoard(){
+        page.navigate("http://10.0.1.4/#/");
+    }
+
     public void navigation(String module,String subModule){
         page.click(sideMenuLocator);
         page.click(sideMenuLinkLocator);

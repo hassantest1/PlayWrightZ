@@ -10,7 +10,7 @@ import utils.listeners.TestListener;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @Listeners({TestListener.class, AnnotationTransformer.class})
-public class LoginTest extends LoginBase {
+public class LoginTest extends BaseClass {
 
     @Test(priority = 1, groups = "negative")
     public void testNegativeLogin() {
@@ -73,6 +73,7 @@ public class LoginTest extends LoginBase {
         Assert.assertEquals(loginPage.getRememberMeLabelText(),Strings.rememberMeLabelText);
         Assert.assertEquals(loginPage.getForgetPassLabelText(),Strings.forgetPassLabelText);
         loginPage.login(userName, userPass);
+        //playwrightSession.storeSessionStorage();
         Assert.assertEquals(loginPage.getClickToResendLinkText(),Strings.clickToResendText);
         Assert.assertEquals(loginPage.getOtpScreenTitle(),Strings.verifyOtpText);
         Assert.assertEquals(loginPage.getPleaseCheckEmailTitle(),Strings.pleaseCheckEmailText);
@@ -83,5 +84,6 @@ public class LoginTest extends LoginBase {
         int flag = returnLoginHistory(userID);
         loginPage.logOut();
         Assert.assertEquals(flag,1,"No user login Record is found in Database against UserID="+userID);
+
     }
 }

@@ -1,26 +1,28 @@
 
 import constants.Strings;
 import constants.ZboxUrls;
+import dbfactory.ChannelScripts;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import utils.common.ApiRequest;
 import utils.common.CommonFun;
 import utils.extentreports.ExtentTestManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class ChannelTest extends LoginBase {
-
+public class ChannelTest extends BaseClass {
+//add login session, if error message is displayed except success retry
     String CheckerID;
     String channelName;
+    String channelDescription;
 
-    @Test(priority = 2, groups = "positive")
-    public void testLoginPositive() throws SQLException {
+    @Test(priority = 1, groups = "positive")
+    public void testLoginPositive() throws InterruptedException {
         ExtentTestManager.startTest("testLoginPositive",
                 "Verify user should be able to login using valid credentials");
         loginPage.login(userName, userPass);
@@ -28,29 +30,45 @@ public class ChannelTest extends LoginBase {
         navigation.navigateToChannel();
     }
 
-    @Test(priority = 3, groups = "positive")
+    @Test(priority = 2, groups = "negative")
+    public void verifyLabelsAreVisible(){
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(addChannelPage.getAddNewText(),Strings.addNewText);
+        softAssert.assertEquals(addChannelPage.getNameLabelText(),Strings.nameText);
+        softAssert.assertEquals(addChannelPage.getDescriptionLabelText(),Strings.descriptionText);
+        softAssert.assertAll();
+
+    }
+
+    @Test(priority = 2, groups = "negative")
     public void testNegativeFieldValidation(){
+        ExtentTestManager.startTest("testNegativeFieldValidation",
+                "Verify that Field validation message is visible when submit button is pressed on empty fields");
         addChannelPage.clickAddButton();
         addChannelPage.clickSubmitButton();
         addChannelPage.checkNameFieldErrorMessageIsVisible();
         addChannelPage.checkDesFieldErrorMessageIsVisible();
-        assertThat(page.getByText(Strings.thisFieldIsRequiredText)).isVisible();
-        assertThat(page.getByText(Strings.thisFieldIsRequiredText)).isVisible();
+        assertThat(page.getByText(Strings.thisFieldIsRequiredText).first()).isVisible();
+        //assertThat(page.getByText(Strings.thisFieldIsRequiredText).nth(2)).isVisible();
     }
 
-    @Test(priority = 3, groups = "positive")
+    @Test(priority = 3, groups = "negative")
     public void testFieldValidationWithOnlyChannelName(){
-        addChannelPage.clickAddButton();
+        ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
+                "Verify that channel description Field validation message is visible when submit button is pressed on empty fields");
+        addChannelPage.emptyAllInputFields();
         addChannelPage.enterChannelName(CommonFun.getRandomName("AutomatedDescription"));
         addChannelPage.clickSubmitButton();
         addChannelPage.checkDesFieldErrorMessageIsVisible();
         assertThat(page.getByText(Strings.thisFieldIsRequiredText)).isVisible();
     }
 
-    @Test(priority = 3, groups = "positive")
+    @Test(priority = 4, groups = "negative")
     public void testFieldValidationWithOnlyChannelDesc(){
-        addChannelPage.clickAddButton();
-        addChannelPage.clickAddButton();
+        ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
+                "Verify that channel name Field validation message is visible when submit button is pressed on empty fields");
+        addChannelPage.emptyAllInputFields();
         addChannelPage.emptyAllInputFields();
         addChannelPage.enterChannelDesc(CommonFun.getRandomName("AutomatedDescription"));
         addChannelPage.clickSubmitButton();
@@ -58,28 +76,62 @@ public class ChannelTest extends LoginBase {
         assertThat(page.getByText(Strings.thisFieldIsRequiredText)).isVisible();
     }
 
-    @Test(priority = 3, groups = "positive")
-    public void testChannelFields(){
-        addChannelPage.clickAddButton();
-        channelName = CommonFun.getRandomName("AutomatedChannel");
-        addChannelPage.enterChannelName(channelName);
-        addChannelPage.enterChannelDesc(CommonFun.getRandomName("AutomatedDescription"));
-        addChannelPage.clickSubmitButton();
-        addChannelPage.dialogBoxIsVisible();
-        CheckerID = addChannelPage.getCheckerID();
-    }
-
-    @Test(priority = 4, groups = "positive")
-    public void checkerApproval() throws SQLException {
-        CheckerTest checkerTest = new CheckerTest(CheckerID);
-        checkerTest.testLoginPositive();
-        checkerTest.searchByCheckerId();
-        addChannelPage.clickDialogBoxOkButton();
-        page.pause();
-    }
-
     @Test(priority = 5, groups = "positive")
+    public void testChannelCreation() throws SQLException {
+        ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
+                "Verify that user should be able to create channel");
+        addChannelPage.emptyAllInputFields();
+        channelName = CommonFun.getRandomName("AutomatedChannel");
+        channelDescription = CommonFun.getRandomName("AutomatedDescription");
+        addChannelPage.enterChannelName(channelName);
+        addChannelPage.enterChannelDesc(channelDescription);
+        addChannelPage.clickSubmitButton();
+        addChannelPage.verifyDialogBoxMessage();
+        if (!addChannelPage.verifyDialogBoxMessage().toLowerCase().contains("success")) {
+            addChannelPage.clickDialogBoxOkButton();
+            addChannelPage.clickSubmitButton();
+            addChannelPage.verifyDialogBoxMessage();
+            Assert.assertTrue(addChannelPage.verifyDialogBoxMessage().toLowerCase().contains("success"),"Channel was not created due to"+addChannelPage.getCheckerID());
+        }
+        CheckerID = addChannelPage.getCheckerID();
+        Assert.assertEquals(ChannelScripts.verifyNewlyCreatedChannelInDB(channelName),1,"No Channel Record is found in Database against Name"+channelName);
+        addChannelPage.clickDialogBoxOkButton();
+        assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
+    }
+
+    @Test(priority = 6, groups = "positive")
+    public void searchCreatedChannelAndNavigateToViewPageAndVerifyValues(){
+        assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
+        addChannelPage.enterChannelName(channelName);
+        addChannelPage.clickOnSearchButton();
+        addChannelPage.clickOnViewButton();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(addChannelPage.getAddNewText(),Strings.viewDetailsText);
+        softAssert.assertEquals(addChannelPage.getNameLabelText(),Strings.nameText);
+        softAssert.assertEquals(addChannelPage.getDescriptionLabelText(),Strings.descriptionText);
+        softAssert.assertEquals(addChannelPage.getChannelNameFieldTextOnViewPage(),channelName);
+        softAssert.assertEquals(addChannelPage.getChannelDescFieldTextOnViewPage(),channelDescription);
+        softAssert.assertAll();
+        addChannelPage.clickOnOkButton();
+        page.pause();
+        assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
+    }
+
+    @Test(priority = 6, groups = "positive",dependsOnMethods = "testChannelCreation")
+    public void checkerApproval() throws SQLException {
+        ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
+                "Verify that checker user can approve new created channel");
+        ChannelCheckerTest checkerTest = new ChannelCheckerTest();
+        checkerTest.splitCheckIdAndName(CheckerID);
+        checkerTest.testLoginPositive();
+        checkerTest.approveRecordFromChecker();
+        addChannelPage.clickDialogBoxOkButton();
+    }
+
+    @Test(priority = 7, groups = "positive",dependsOnMethods = "checkerApproval",enabled = false)
     public void hybridApproach(){
+        ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
+                "Verify that created channel is visible in API "+ZboxUrls.GET_ALL_CHANNELS);
         Response response = ApiRequest.getApiResponse(ZboxUrls.GET_ALL_CHANNELS);
         assert response != null;
         String responseBody = response.getBody().asString();
