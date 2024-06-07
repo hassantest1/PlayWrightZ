@@ -63,6 +63,7 @@ public class AddChannelPage {
     public void checkNameFieldErrorMessageIsVisible(){
         page.locator(nameFieldErrorMessageLocator).isVisible();
     }
+    //Wrong Locator
     public void checkDesFieldErrorMessageIsVisible(){
         page.locator(nameFieldErrorMessageLocator).isVisible();
     }

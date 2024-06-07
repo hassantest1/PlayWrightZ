@@ -124,7 +124,7 @@ public class UpdateChannelTest extends BaseClass {
         softAssert.assertAll();
     }
 
-    @Test(priority = 7, groups = "positive",enabled = false)
+    @Test(priority = 7, groups = "positive",enabled = true)
     public void verifyInactiveNewlyCreatedChannel(){
         assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
         addChannelPage.enterChannelName(channelName);

@@ -9,7 +9,7 @@ public class NavigationPage {
     private final String sideMenuLocator = "(//button[@class='logo p-link'])[2]";
     private final String sideMenuLinkLocator = "(//button[@class='menu-pin p-link'])[2]";
     private final String moduleNavigationLocator = "//div[@class='layout-menu-wrapper layout-sidebar-active']//li//span[text()=";
-    private final String subModuleNavigationLocator = "//div[@class='layout-menu-wrapper layout-sidebar-active']//li//span[text()=";
+    private final String subModuleNavigationLocator = "//div[@class='layout-menu-wrapper layout-sidebar-active']//li//ul//span[text()=";
 
     public NavigationPage(Page page){
         this.page = page;
@@ -18,7 +18,9 @@ public class NavigationPage {
     public void navigateToChannel(){
         navigation("Channel","Create Channel");
     }
-
+    public void navigateToProduct(){
+        navigation("Product Catalog","Product Catalog");
+    }
     public void navigateToChecker(){
         navigation("Administration","Request Checker");
     }

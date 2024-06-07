@@ -17,10 +17,15 @@ public class Strings {
     public static String pleaseCheckEmailText = "Please Check Your Email";
     public static String didNotGetOtpText = "Didn't get the code?";
     public static String thisFieldIsRequiredText = "This Field is required";
+    public static String transactionListErrorMsg = "This Dropdown should not be empty";
+    public static String empty = "";
+
     public static String descriptionText = "Description*";
     public static String nameText = "Name*";
+    public static String transactionText = "List of transactions*";
     public static String addNewText = "ADD NEW";
     public static String viewDetailsText = "View Detail";
     public static String somethingHasWentWrongText = "Something went wrong !!";
     public static String editDetailText = "Edit Detail";
+    public static String transactionName = "Zong";
 }

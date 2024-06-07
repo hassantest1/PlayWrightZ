@@ -4,10 +4,7 @@ import dbfactory.LoginPageScripts;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.asserts.SoftAssert;
-import pagefactory.AddChannelPage;
-import pagefactory.CheckerPage;
-import pagefactory.LoginPage;
-import pagefactory.NavigationPage;
+import pagefactory.*;
 import utils.configrations.ConfigManager;
 
 import java.io.IOException;
@@ -18,6 +15,7 @@ public class BaseClass extends LoginPageScripts {
     protected Page page;
     protected LoginPage loginPage;
     protected AddChannelPage addChannelPage;
+    protected ProductCatalogPage productCatalogPage;
     protected NavigationPage navigation;
 
     protected CheckerPage checkerPage;
@@ -42,6 +40,7 @@ public class BaseClass extends LoginPageScripts {
         page.setDefaultTimeout(120000);
         loginPage = new LoginPage(page);
         addChannelPage = new AddChannelPage(page);
+        productCatalogPage = new ProductCatalogPage(page);
         checkerPage = new CheckerPage(page);
         navigation = new NavigationPage(page);
         page.navigate(ZboxUrls.ZBOX_BASE_URL_QA);
