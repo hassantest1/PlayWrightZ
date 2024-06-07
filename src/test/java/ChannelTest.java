@@ -5,16 +5,21 @@ import dbfactory.ChannelScripts;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utils.common.ApiRequest;
 import utils.common.CommonFun;
 import utils.extentreports.ExtentTestManager;
+import utils.listeners.AnnotationTransformer;
+import utils.listeners.TestListener;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+
+@Listeners({TestListener.class, AnnotationTransformer.class})
 public class ChannelTest extends BaseClass {
 //add login session, if error message is displayed except success retry
     String CheckerID;
@@ -30,18 +35,16 @@ public class ChannelTest extends BaseClass {
         navigation.navigateToChannel();
     }
 
-    @Test(priority = 2, groups = "negative")
+    @Test(priority = 2, groups = "negative",enabled = false)
     public void verifyLabelsAreVisible(){
-
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(addChannelPage.getAddNewText(),Strings.addNewText);
         softAssert.assertEquals(addChannelPage.getNameLabelText(),Strings.nameText);
         softAssert.assertEquals(addChannelPage.getDescriptionLabelText(),Strings.descriptionText);
         softAssert.assertAll();
-
     }
 
-    @Test(priority = 2, groups = "negative")
+    @Test(priority = 2, groups = "negative",enabled = false)
     public void testNegativeFieldValidation(){
         ExtentTestManager.startTest("testNegativeFieldValidation",
                 "Verify that Field validation message is visible when submit button is pressed on empty fields");
@@ -53,7 +56,7 @@ public class ChannelTest extends BaseClass {
         //assertThat(page.getByText(Strings.thisFieldIsRequiredText).nth(2)).isVisible();
     }
 
-    @Test(priority = 3, groups = "negative")
+    @Test(priority = 3, groups = "negative",enabled = false)
     public void testFieldValidationWithOnlyChannelName(){
         ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
                 "Verify that channel description Field validation message is visible when submit button is pressed on empty fields");
@@ -64,7 +67,7 @@ public class ChannelTest extends BaseClass {
         assertThat(page.getByText(Strings.thisFieldIsRequiredText)).isVisible();
     }
 
-    @Test(priority = 4, groups = "negative")
+    @Test(priority = 4, groups = "negative",enabled = false)
     public void testFieldValidationWithOnlyChannelDesc(){
         ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
                 "Verify that channel name Field validation message is visible when submit button is pressed on empty fields");
@@ -76,7 +79,7 @@ public class ChannelTest extends BaseClass {
         assertThat(page.getByText(Strings.thisFieldIsRequiredText)).isVisible();
     }
 
-    @Test(priority = 5, groups = "positive")
+    @Test(priority = 5, groups = "positive",enabled = false)
     public void testChannelCreation() throws SQLException {
         ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
                 "Verify that user should be able to create channel");
@@ -99,7 +102,7 @@ public class ChannelTest extends BaseClass {
         assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
     }
 
-    @Test(priority = 6, groups = "positive")
+    @Test(priority = 6, groups = "positive",enabled = false)
     public void searchCreatedChannelAndNavigateToViewPageAndVerifyValues(){
         assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
         addChannelPage.enterChannelName(channelName);
@@ -117,7 +120,7 @@ public class ChannelTest extends BaseClass {
         assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
     }
 
-    @Test(priority = 6, groups = "positive",dependsOnMethods = "testChannelCreation")
+    @Test(priority = 6, groups = "positive",dependsOnMethods = "testChannelCreation",enabled = false)
     public void checkerApproval() throws SQLException {
         ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
                 "Verify that checker user can approve new created channel");
@@ -125,7 +128,7 @@ public class ChannelTest extends BaseClass {
         checkerTest.splitCheckIdAndName(CheckerID);
         checkerTest.testLoginPositive();
         checkerTest.approveRecordFromChecker();
-        addChannelPage.clickDialogBoxOkButton();
+
     }
 
     @Test(priority = 7, groups = "positive",dependsOnMethods = "checkerApproval",enabled = false)

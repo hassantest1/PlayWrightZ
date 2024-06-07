@@ -5,7 +5,7 @@ target/
 node_modules
 package.json
 package-lock.json
-
+extent-reports
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

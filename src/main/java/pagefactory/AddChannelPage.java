@@ -28,15 +28,32 @@ public class AddChannelPage {
     private final String resetButtonLocator = "//button[@aria-label='Reset' and @class='p-button p-component Btn__Transparent']";
     private final String dataTableViewButtonLocator = "//button[@class='p-button p-component p-button-rounded p-button-icon-only']";
     private final String dataTableEditButtonLocator = "//button[@class='p-button p-component p-button-rounded p-button-primary p-button-icon-only']";
-    private final String dataTableActiveInactiveSwitchLocator = "//div[@class='p-inputswitch p-component p-inputswitch-checked']";
+    private final String dataTableActiveInactiveSwitchLocator = "//div[@class='actions']//span[@class='p-inputswitch-slider']";
     private final String okButtonLocator = "//button[@class='p-button p-component Btn__Dark' and @aria-label='Okay']";
     private final String updateButtonLocator = "//button[@class='p-button p-component Btn__Dark' and @aria-label='Update']";
+    private final String selectApprovedFromDropDown = "li[role='option'][aria-label='Approved']";
+    private final String selectAssignBackFromDropDown = "li[role='option'][aria-label='Assign Back']";
+
+    private final String clickCheckerStatusDropDown = "#statusId";
 
     public AddChannelPage(Page page) {
         this.page = page;
     }
     public void enterChannelName(String channelName){
         page.fill(channelNameFieldLocator,channelName);
+    }
+    public void selectApproveFromDropDown(){
+        page.waitForSelector(clickCheckerStatusDropDown);
+        page.click(clickCheckerStatusDropDown);
+        page.waitForSelector(selectApprovedFromDropDown);
+        page.locator(selectApprovedFromDropDown).click();
+    }
+
+    public void selectAssignBackFromDropDown(){
+        page.waitForSelector(clickCheckerStatusDropDown);
+        page.click(clickCheckerStatusDropDown);
+        page.waitForSelector(selectAssignBackFromDropDown);
+        page.locator(selectAssignBackFromDropDown).click();
     }
     public void enterChannelDesc(String channelDesc){
         page.fill(channelDescriptionFieldLocator,channelDesc);
