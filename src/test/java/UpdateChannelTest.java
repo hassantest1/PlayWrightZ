@@ -18,6 +18,7 @@ public class UpdateChannelTest extends BaseClass {
     String updatedChannelDescription;
     CheckerTest checkerTest = new CheckerTest();
 
+
     @Test(priority = 1, groups = "positive")
     public void testLoginPositive() {
         ExtentTestManager.startTest("testLoginPositive",
@@ -124,6 +125,7 @@ public class UpdateChannelTest extends BaseClass {
         softAssert.assertAll();
     }
 
+<<<<<<< HEAD
     @Test(priority = 7, groups = "positive",enabled = true)
     public void verifyInactiveNewlyCreatedChannel(){
         assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
@@ -144,6 +146,9 @@ public class UpdateChannelTest extends BaseClass {
     }
 
     @Test(priority = 8, groups = "positive")
+=======
+    @Test(priority = 7, groups = "positive")
+>>>>>>> eee0f76a093638b8c421f1b97d61771fbb444a68
     public void rejectingRecordFromCheckerAfterUpdating(){
         assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
         addChannelPage.enterChannelName(channelName);
@@ -175,7 +180,7 @@ public class UpdateChannelTest extends BaseClass {
         softAssert.assertAll();
     }
 
-    @Test(priority = 9, groups = "positive")
+    @Test(priority = 8, groups = "positive")
     public void assignBackRecordFromCheckerAfterUpdating(){
         assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
         addChannelPage.enterChannelName(channelName);
@@ -207,10 +212,30 @@ public class UpdateChannelTest extends BaseClass {
         softAssert.assertAll();
     }
 
-    @Test(priority = 10, groups = "positive",enabled = false)
+    @Test(priority = 9, groups = "positive")
+    public void verifyInactiveNewlyCreatedChannel(){
+        assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
+        addChannelPage.enterChannelName(channelName);
+        addChannelPage.selectAssignBackFromDropDown();
+        addChannelPage.clickOnSearchButton();
+        addChannelPage.clickOnActiveInactiveButton();
+        addChannelPage.verifyDialogBoxMessage();
+        if (!addChannelPage.verifyDialogBoxMessage().toLowerCase().contains("success")) {
+            addChannelPage.clickDialogBoxOkButton();
+            addChannelPage.clickSubmitButton();
+            addChannelPage.verifyDialogBoxMessage();
+            Assert.assertTrue(addChannelPage.verifyDialogBoxMessage().toLowerCase().contains("success"),"Inactivating Channel Failed "+addChannelPage.getCheckerID());
+        }
+        CheckerID = addChannelPage.getCheckerID();
+        checkerTest.splitCheckIdAndName(CheckerID);
+        checkerTest.approveRecordFromChecker();
+        addChannelPage.clickDialogBoxOkButton();
+    }
+    @Test(priority = 10, groups = "positive")
     public void verifyActivatingNewlyCreatedChannel(){
         assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
         addChannelPage.enterChannelName(channelName);
+        addChannelPage.selectApproveFromDropDown();
         addChannelPage.clickOnSearchButton();
         addChannelPage.clickOnActiveInactiveButton();
         addChannelPage.verifyDialogBoxMessage();
@@ -225,5 +250,6 @@ public class UpdateChannelTest extends BaseClass {
         checkerTest.approveRecordFromChecker();
         addChannelPage.clickDialogBoxOkButton();
     }
+
 
 }

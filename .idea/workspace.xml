@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6f88e28-33fa-43f4-8070-4a9df7d0fba5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/CheckerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ProductCheckerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/maven.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/extent-reports/extent-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/extent-reports/extent-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pagefactory/ProductCatalogPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pagefactory/ProductCatalogPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/listeners/TestListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/listeners/TestListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ChannelCheckerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ChannelCheckerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ChannelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ChannelTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ProductCatalogTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ProductCatalogTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/UpdateChannelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/UpdateChannelTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="e6f88e28-33fa-43f4-8070-4a9df7d0fba5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

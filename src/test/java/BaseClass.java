@@ -17,7 +17,6 @@ public class BaseClass extends LoginPageScripts {
     protected AddChannelPage addChannelPage;
     protected ProductCatalogPage productCatalogPage;
     protected NavigationPage navigation;
-
     protected CheckerPage checkerPage;
     protected String userName;
     protected String userPass;
