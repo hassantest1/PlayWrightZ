@@ -1,27 +1,19 @@
 import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-import constants.ZboxUrls;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pagefactory.CheckerPage;
-import pagefactory.LoginPage;
-import pagefactory.NavigationPage;
-import utils.configrations.ConfigManager;
 import utils.extentreports.ExtentTestManager;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
-public class ChannelCheckerTest extends CheckerTest {
-    private Browser browser;
-    private Playwright playwright;
-    private Page page;
-    private CheckerPage checkerPage;
+public class ProductCheckerTest extends CheckerTest {
 
 
+    public ProductCheckerTest(){
+        super();
+    }
 
+    @Override
     @Test(priority = 1, groups = "positive")
     public void approveRecordFromChecker(){
         ExtentTestManager.startTest("approveRecordFromChecker",
@@ -41,6 +33,7 @@ public class ChannelCheckerTest extends CheckerTest {
         checkerPage.clickDialogBoxOkButton();
     }
 
+    @Override
     @Test(priority = 3, groups = "positive")
     public void rejectRecordFromChecker(){
         ExtentTestManager.startTest("testRejectRecord",
@@ -59,6 +52,7 @@ public class ChannelCheckerTest extends CheckerTest {
         checkerPage.clickDialogBoxOkButton();
     }
 
+    @Override
     @Test(priority = 3, groups = "positive")
     public void assignBackRecordFromChecker(){
         checkerPage.enterCheckID(checkerId);
@@ -74,5 +68,6 @@ public class ChannelCheckerTest extends CheckerTest {
         }
         checkerPage.clickDialogBoxOkButton();
     }
+
 
 }

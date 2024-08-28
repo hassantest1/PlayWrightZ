@@ -88,7 +88,7 @@ public class TestListener implements ITestListener {
         StringBuilder stackTrace = new StringBuilder();
         for (StackTraceElement element : throwable.getStackTrace()) {
             stackTrace.append(element.toString()).append("\n");
-        }
+        }       
         return stackTrace.toString();
     }
 

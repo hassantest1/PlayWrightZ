@@ -16,7 +16,7 @@ public class UpdateChannelTest extends BaseClass {
     String channelName;
     String channelDescription;
     String updatedChannelDescription;
-    ChannelCheckerTest checkerTest = new ChannelCheckerTest();
+    CheckerTest checkerTest = new CheckerTest();
 
     @Test(priority = 1, groups = "positive")
     public void testLoginPositive() {
@@ -57,7 +57,7 @@ public class UpdateChannelTest extends BaseClass {
         ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
                 "Verify that checker user can approve new created channel");
         checkerTest.splitCheckIdAndName(CheckerID);
-        checkerTest.testLoginPositive();
+        checkerTest.testCheckerLoginPositive();
         checkerTest.approveRecordFromChecker();
     }
 

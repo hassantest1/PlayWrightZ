@@ -29,16 +29,6 @@ public class ProductCatalogPage {
     private final String successDialogMsgLocator = "//div[@class='DeleteLabel__Text']//label[@for='moduleDescr']";
     private final String dialogBoxOkButtonLocator = "//button[@aria-label='Okay' and @class='p-button p-component Btn__Dark__Ok']";
 
-
-
-
-
-
-
-
-
-
-
     public ProductCatalogPage(Page page) {
         this.page = page;
     }

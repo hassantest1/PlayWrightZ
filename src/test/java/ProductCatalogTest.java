@@ -1,24 +1,17 @@
 import constants.Strings;
-import constants.ZboxUrls;
 import dbfactory.ProductScripts;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import utils.common.ApiRequest;
 import utils.common.CommonFun;
 import utils.extentreports.ExtentTestManager;
 import utils.listeners.AnnotationTransformer;
 import utils.listeners.TestListener;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
-
 
 
 @Listeners({TestListener.class, AnnotationTransformer.class})
@@ -132,6 +125,37 @@ public class ProductCatalogTest extends BaseClass{
     }
 
 
+    @Test(priority = 6, groups = "positive",dependsOnMethods = "testProductCreation")
+    public void checkerApproval() throws SQLException {
+        ExtentTestManager.startTest("testCheckProductCreationWithID",
+                "Verify that checker user can approve new created Product");
+        ProductCheckerTest productCheckerTest = new ProductCheckerTest();
+        productCheckerTest.splitCheckIdAndName(CheckerID);
+        productCheckerTest.testCheckerLoginPositive();
+        productCheckerTest.approveRecordFromChecker();
+        //productCatalogPage.clickDialogBoxOkButton();
+    }
+
+/*
+    @Test(priority = 6, groups = "positive")
+    public void searchCreatedChannelAndNavigateToViewPageAndVerifyValues(){
+        assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
+        addChannelPage.enterChannelName(channelName);
+        addChannelPage.clickOnSearchButton();
+        addChannelPage.clickOnViewButton();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(addChannelPage.getAddNewText(),Strings.viewDetailsText);
+        softAssert.assertEquals(addChannelPage.getNameLabelText(),Strings.nameText);
+        softAssert.assertEquals(addChannelPage.getDescriptionLabelText(),Strings.descriptionText);
+        softAssert.assertEquals(addChannelPage.getChannelNameFieldTextOnViewPage(),channelName);
+        softAssert.assertEquals(addChannelPage.getChannelDescFieldTextOnViewPage(),channelDescription);
+        softAssert.assertAll();
+        addChannelPage.clickOnOkButton();
+        page.pause();
+        assertThat(page.getByLabel("Breadcrumb")).containsText("Channel");
+    }
+
+*/
 
 
 

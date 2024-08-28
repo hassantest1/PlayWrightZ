@@ -121,9 +121,9 @@ public class ChannelTest extends BaseClass {
     public void checkerApproval() throws SQLException {
         ExtentTestManager.startTest("testFieldValidationWithOnlyChannelName",
                 "Verify that checker user can approve new created channel");
-        ChannelCheckerTest checkerTest = new ChannelCheckerTest();
+        CheckerTest checkerTest = new CheckerTest();
         checkerTest.splitCheckIdAndName(CheckerID);
-        checkerTest.testLoginPositive();
+        checkerTest.testCheckerLoginPositive();
         checkerTest.approveRecordFromChecker();
         addChannelPage.clickDialogBoxOkButton();
     }
